@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amazon Product Scraper</title>
+  <style>
+    /* General Body Styling */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
+      background: linear-gradient(135deg, #ece9e6, #ffffff);
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px;
+      color: #333;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    /* Product Container Styling */
+    .product-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    /* Product Card Styling */
+    .product-card {
+      background: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+      width: 250px;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .product-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Image Styling */
+    .product-image img {
+      width: 100%;
+      border-bottom: 1px solid #ddd;
+    }
+
+    /* Product Info Styling */
+    .product-info {
+      padding: 15px;
+    }
+
+    .product-info h2 {
+      font-size: 1.2em;
+      color: #333;
+      margin: 10px 0;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .product-info .price {
+      font-size: 1em;
+      color: #666;
+      margin: 10px 0;
+    }
+
+    /* Button Styling */
+    .buy-now {
+      display: block;
+      background: #ff9900;
+      color: #fff;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      text-transform: uppercase;
+      font-weight: bold;
+      border-radius: 6px;
+      transition: background 0.3s ease;
+      cursor: pointer;
+    }
+
+    .buy-now:hover {
+      background: #e68a00;
+    }
+
+    /* Responsive Design */
+    @media (min-width: 768px) {
+      .product-container {
+        gap: 30px;
+      }
+      .product-card {
+        width: 280px;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      h1 {
+        font-size: 3em;
+      }
+      .product-card {
+        width: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Amazon Products</h1>
+  </header>
+  <section class="product-container">
+    <% if (data.length) { %>
+      <% data.forEach(product => { %>
+        <div class="product-card">
+          <div class="product-image">
+            <img src="<%= product.imageURL %>" alt="<%= product.title %>" />
+          </div>
+          <div class="product-info">
+            <h2><%= product.title.length > 50 ? product.title.slice(0, 50) + '...' : product.title %></h2>
+            <p class="price"><strong>Price:</strong> <%= product.price %></p>
+            <button class="buy-now">Buy Now</button>
+          </div>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <p>No products found.</p>
+    <% } %>
+  </section>
+</body>
+</html>
