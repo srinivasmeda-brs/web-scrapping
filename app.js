@@ -1,19 +1,22 @@
 const express = require("express");
 const puppeteer = require("puppeteer");
 const app = express();
-const port = 4005;
+const port = process.env.PORT || 4005; // Use environment variable or default to 4005
 
 app.set("view engine", "ejs");
 app.set("views", "./views");
 app.use(express.static("public"));
 
 app.get("/", async (req, res) => {
-  const amazonURL =
-    "https://www.amazon.in/gp/browse.html?node=4092115031&ref_=nav_em_sbc_tvelec_gaming_consoles_0_2_9_12";
+  const amazonURL = "https://www.amazon.in/gp/browse.html?node=4092115031&ref_=nav_em_sbc_tvelec_gaming_consoles_0_2_9_12";
   let browser;
   try {
     // Launch Puppeteer in headless mode
-    browser = await puppeteer.launch({ headless: true });
+    browser = await puppeteer.launch({
+      headless: true,
+      // Uncomment below if you need to specify executablePath
+      // executablePath: process.env.PUPPETEER_EXECUTABLE_PATH, // Add if needed
+    });
     const page = await browser.newPage();
 
     await page.goto(amazonURL, { waitUntil: "domcontentloaded" });
